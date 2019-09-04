@@ -31,6 +31,16 @@ This script queries your network device(s) using the napalm command _get_interfa
 ### combined.py
 This script combines the two above scripts into one and uses functions which gives us some better error handling.
 
+## arp.py
+This script queries your network device(s) using the napalm command _get_arp_table_. It then looks up the each IP in Netbox, if no result is returned it will lookup the MAC address to see if it is assoicated with a virtual machine in Netbox, if that returns no results it will lookup the MAC to see if its assoicated with a device. No output is provided if the IP was found in Netbox. If the IP wasn't found in Netbox but the MAC was you'll see output. If nothing was found in Netbox you'll see output. This script was made to help audit ARP data against Netbox. Its not super fast but it works.
+
+Example Output:
+```
+10.1.1.1 returned more than 1 result in Netbox, ignoring.
+Couldn't find 10.100.42.40 (Vlan10, Port-Channel1) or 00:50:56:87:A2:89 (VMware, Inc.) in netbox
+Couldn't find 10.100.42.42 (Vlan10, not learned) in netbox, but found 00:50:56:6D:E5:CD (VMware, Inc.) on ESXIHOST-1
+```
+
 ## TODO
 * Better error handling
 * ~~Combine both scripts~~
